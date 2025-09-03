@@ -1,18 +1,7 @@
-resource "aws_instance" "web" {
-  ami           = "ami-0b4f379183e5706b9" #centos-8-devops-practice ami id
-  instance_type = "t3.micro"
-  vpc_security_group_ids = [aws_security_group.roboshop-all.id] # syntax linking sg to this instance # this means list
-
-
-  tags = {
-    Name = "HelloTerraform"
-  }
-}
-
 resource "aws_security_group" "roboshop-all" { #this is terraform name, for terraform reference only
   name        = "roboshop-all-aws" #this is for aws sg name
   description = "var.sg-description"
-  #vpc_id      = aws_vpc.main.id #if not defined, region's default vpc will be taken
+  #vpc_id      = aws_vpc.main.id #if not defined here, region's default vpc will be taken
 
 ingress {
     description      = "Allow All ports"
@@ -35,7 +24,3 @@ ingress {
       Name = "roboshop-all-aws"
   }
 }
-
-#techincally EC2 instance is dependent on sg in order to be created, so sg creationshould be given first before ec2 in the file.
-#but terraform is automatic depedency management, so doesn't matter what is given first,
-#and terraform is declarative sequence need not be followed in terraform # terraform is intelligent enough to create which one 1st 
